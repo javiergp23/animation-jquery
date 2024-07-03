@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demostración de jQuery</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .box {
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+            background-color: lightblue;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .newClass {
+            border: 2px solid red;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Demostración de Métodos y Efectos de jQuery</h1>
+
+    <h2>Animación</h2>
+    <div id="animateBox" class="box"></div>
+    <button id="animateBtn">animate()</button>
+    <p>Hacer clic en el botón <strong>animate()</strong> para animar la caja.</p>
+
+    <h2>Efectos de Fade</h2>
+    <div id="fadeBox" class="box hidden"></div>
+    <button id="fadeInBtn">fadeIn()</button>
+    <button id="fadeOutBtn">fadeOut()</button>
+    <button id="fadeToggleBtn">fadeToggle()</button>
+    <button id="fadeToBtn">fadeTo(0.5)</button>
+    <p>
+        1. Hacer clic en <strong>fadeIn()</strong> para mostrar la caja.<br>
+        2. Hacer clic en <strong>fadeOut()</strong> para ocultar la caja.<br>
+        3. Hacer clic en <strong>fadeToggle()</strong> para alternar la visibilidad de la caja.<br>
+        4. Hacer clic en <strong>fadeTo(0.5)</strong> para ajustar la opacidad de la caja.
+    </p>
+
+    <h2>Efectos Básicos</h2>
+    <div id="effectBox" class="box"></div>
+    <button id="hideBtn">hide()</button>
+    <button id="showBtn">show()</button>
+    <button id="toggleBtn">toggle()</button>
+    <button id="startAnimationBtn">Iniciar animación</button>
+    <button id="stopBtn">stop()</button>
+    <button id="finishBtn">finish()</button>
+    <p>
+        1. Hacer clic en <strong>hide()</strong> para ocultar la caja.<br>
+        2. Hacer clic en <strong>show()</strong> para mostrar la caja.<br>
+        3. Hacer clic en <strong>toggle()</strong> para alternar la visibilidad de la caja.<br>
+        4. Hacer clic en <strong>Iniciar animación</strong> para iniciar una animación continua.<br>
+        5. Hacer clic en <strong>stop()</strong> para detener la animación en curso.<br>
+        6. Hacer clic en <strong>finish()</strong> para finalizar la animación inmediatamente.
+    </p>
+
+    <h2>Manipulación de HTML</h2>
+    <div id="manipulationBox" class="box"></div>
+    <button id="addClassBtn">addClass()</button>
+    <button id="afterBtn">after()</button>
+    <button id="appendBtn">append()</button>
+    <button id="attrBtn">attr()</button>
+    <button id="beforeBtn">before()</button>
+    <p>
+        1. Hacer clic en <strong>addClass()</strong> para añadir una clase nueva a la caja.<br>
+        2. Hacer clic en <strong>after()</strong> para añadir contenido después de la caja.<br>
+        3. Hacer clic en <strong>append()</strong> para añadir contenido dentro de la caja.<br>
+        4. Hacer clic en <strong>attr()</strong> para añadir un atributo a la caja.<br>
+        5. Hacer clic en <strong>before()</strong> para añadir contenido antes de la caja.
+    </p>
+
+    <h2>Manipulación de HTML y CSS</h2>
+    <div id="htmlCssBox" class="box">
+        <p>Contenido inicial</p>
+    </div>
+    <div id="cloneContainer"></div>
+    <button id="cloneBtn">clone()</button>
+    <button id="cssBtn">css()</button>
+    <button id="detachBtn">detach()</button>
+    <button id="emptyBtn">empty()</button>
+    <button id="hasClassBtn">hasClass()</button>
+    <p>
+        1. Hacer clic en <strong>clone()</strong> para clonar la caja.<br>
+        2. Hacer clic en <strong>css()</strong> para cambiar el color de fondo de la caja.<br>
+        3. Hacer clic en <strong>detach()</strong> para separar la caja del DOM.<br>
+        4. Hacer clic en <strong>empty()</strong> para vaciar el contenido de la caja.<br>
+        5. Hacer clic en <strong>hasClass()</strong> para verificar si la caja tiene una clase específica.
+    </p>
+
+
+    <script>
+        $(document).ready(function () {
+            // Métodos de animación
+            $("#animateBtn").click(function () {
+                $("#animateBox").animate({ width: "200px" });
+            });
+
+            // Métodos de fade
+            $("#fadeInBtn").click(function () {
+                $("#fadeBox").fadeIn();
+            });
+            $("#fadeOutBtn").click(function () {
+                $("#fadeBox").fadeOut();
+            });
+            $("#fadeToggleBtn").click(function () {
+                $("#fadeBox").fadeToggle();
+            });
+            $("#fadeToBtn").click(function () {
+                $("#fadeBox").fadeTo("slow", 0.5);
+            });
+
+            // Métodos de efectos
+            $("#hideBtn").click(function () {
+                $("#effectBox").hide();
+            });
+            $("#showBtn").click(function () {
+                $("#effectBox").show();
+            });
+            $("#toggleBtn").click(function () {
+                $("#effectBox").toggle();
+            });
+
+            // Animación continua para stop y finish
+            function animateBox() {
+                $("#effectBox").animate({ left: "+=200px" }, 2000).animate({ left: "-=200px" }, 2000, animateBox);
+            }
+
+            // Animación continua para stop y finish
+            $("#startAnimationBtn").click(function () {
+                $("#effectBox").stop(true, true).css({ left: 0, position: "relative" });
+                animateBox();
+            });
+
+            $("#stopBtn").click(function () {
+                $("#effectBox").stop(true);
+            });
+
+            $("#finishBtn").click(function () {
+                $("#effectBox").finish();
+            });
+
+            // Métodos de manipulación de HTML
+            $("#addClassBtn").click(function () {
+                $("#manipulationBox").addClass("newClass");
+            });
+            $("#afterBtn").click(function () {
+                $("#manipulationBox").after("<p>Texto añadido con after()</p>");
+            });
+            $("#appendBtn").click(function () {
+                $("#manipulationBox").append("<p>Texto añadido con append()</p>");
+            });
+            $("#attrBtn").click(function () {
+                $("#manipulationBox").attr("data-test", "value");
+            });
+            $("#beforeBtn").click(function () {
+                $("#manipulationBox").before("<p>Texto añadido con before()</p>");
+            });
+
+            // Métodos de manipulación de HTML y CSS
+            $("#cloneBtn").click(function () {
+                $("#htmlCssBox").clone().appendTo("#cloneContainer");
+            });
+            $("#emptyBtn").click(function () {
+                $("#htmlCssBox").empty();
+            });
+
+            $("#cssBtn").click(function () {
+                $("#htmlCssBox").css("background-color", "yellow");
+            });
+            $("#detachBtn").click(function () {
+                $("#htmlCssBox").detach();
+            });
+
+            $("#hasClassBtn").click(function () {
+                alert($("#htmlCssBox").hasClass("box"));
+            });
+        });
+    </script>
+</body>
+
+</html>
